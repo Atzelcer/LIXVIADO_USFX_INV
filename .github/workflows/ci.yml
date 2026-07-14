@@ -1,0 +1,58 @@
+name: Validar y desplegar
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validacion-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Obtener repositorio
+        uses: actions/checkout@v6
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.8"
+          cache: pip
+
+      - name: Instalar dependencias
+        run: python -m pip install -r requirements.txt
+
+      - name: Validar Python
+        run: python -m compileall -q modelo
+
+      - name: Validar JavaScript
+        run: |
+          node --check dashboard/app.js
+          node --check dashboard/html2pdf.bundle.min.js
+
+      - name: Validar modelo
+        env:
+          PYTHONPATH: modelo
+        run: python -c "from predecir import cargar_modelo; modelo=cargar_modelo(); assert 'pipeline' in modelo"
+
+      - name: Validar servicio
+        run: |
+          python -m uvicorn api:app --app-dir modelo --host 127.0.0.1 --port 8000 &
+          servidor=$!
+          for intento in {1..20}; do
+            curl -fsS http://127.0.0.1:8000/health && break
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8000/model-info
+          curl -fsS http://127.0.0.1:8000/
+          kill $servidor

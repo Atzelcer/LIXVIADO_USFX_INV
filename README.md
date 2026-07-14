@@ -37,6 +37,10 @@ El archivo `render.yaml` contiene la configuración completa del servicio.
 4. Render detectará `render.yaml` y creará el servicio `lixivialab-ml`.
 5. Cuando termine el despliegue, abra la dirección `onrender.com` asignada.
 
+## Actualizaciones automáticas
+
+Cada cambio enviado a la rama `main` ejecuta el workflow `.github/workflows/ci.yml`. El proceso instala las dependencias, valida Python y JavaScript, carga el modelo y comprueba que el servicio HTTP responda. Render inicia el despliegue automáticamente cuando todas las comprobaciones terminan correctamente.
+
 Configuración equivalente para crear un Web Service manualmente:
 
 - Runtime: `Python 3`
