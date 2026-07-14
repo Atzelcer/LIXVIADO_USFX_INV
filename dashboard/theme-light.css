@@ -153,3 +153,9 @@ input:hover,select:hover{border-color:#78aac2}input:focus,select:focus{backgroun
 
 .main-status.ready{border-color:#32b862;background:linear-gradient(135deg,#148b43,#25bd62);box-shadow:0 6px 16px rgba(20,139,67,.24)}
 .main-status.error{border-color:#ff5065;background:linear-gradient(135deg,#d9082a,#f32142);box-shadow:0 6px 16px rgba(217,8,42,.22)}
+
+.institutional{grid-template-columns:repeat(3,minmax(0,1fr));width:min(350px,100%);max-width:350px;gap:10px}.institutional .logo-frame{width:96px;max-width:96px}.institutional figcaption{font-size:10px}
+@media(min-width:861px){.hero{grid-template-columns:minmax(0,1fr) minmax(320px,350px)}.institutional{grid-template-columns:repeat(3,minmax(0,1fr));width:350px;max-width:350px}}
+@media(max-width:860px){.institutional{grid-template-columns:repeat(3,minmax(0,1fr));width:min(330px,100%);max-width:330px}.institutional .logo-frame{width:92px;max-width:92px}}
+@media(max-width:600px){.institutional{grid-template-columns:repeat(3,minmax(0,1fr));width:min(295px,100%);max-width:295px;gap:8px}.institutional .logo-frame{width:82px;max-width:82px}.institutional figcaption{font-size:9px}}
+@media(max-width:370px){.institutional{width:min(260px,100%);max-width:260px;gap:6px}.institutional .logo-frame{width:72px;max-width:72px}.institutional figcaption{font-size:8px}}
