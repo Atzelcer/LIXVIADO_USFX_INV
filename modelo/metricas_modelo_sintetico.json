@@ -1,0 +1,41 @@
+{
+  "modelo_seleccionado": "gradient_boosting",
+  "procedencia": "simulado",
+  "uso_cientifico": false,
+  "filas_entrenamiento": 40000,
+  "filas_prueba": 10000,
+  "error_medio_global": 0.01062005092991695,
+  "advertencias": [],
+  "por_objetivo": {
+    "ph_final": {
+      "mae": 0.11296328925420093,
+      "rmse": 0.14311225552533308,
+      "r2": 0.9770088780725086
+    },
+    "dqo_final": {
+      "mae": 123.64304365452328,
+      "rmse": 177.58259752216514,
+      "r2": 0.9898857227398696
+    },
+    "dbo5_final": {
+      "mae": 60.60125759812309,
+      "rmse": 88.85568832100783,
+      "r2": 0.9878036533138048
+    },
+    "conductividad_final": {
+      "mae": 163.22373086884386,
+      "rmse": 208.18236078347763,
+      "r2": 0.9982241514617335
+    },
+    "turbidez_final": {
+      "mae": 18.19810564158637,
+      "rmse": 24.882896153624237,
+      "r2": 0.9855913789745424
+    },
+    "indice_toxicidad_final": {
+      "mae": 2.0413978675333633,
+      "rmse": 2.568651362933587,
+      "r2": 0.9789469049470491
+    }
+  }
+}

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#061b2b">
+  <title>LixiviaLab ML</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="theme-light.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-copy">
+      <h1>LixiviaLab <i>ML</i></h1>
+      <p>Predicción multisalida para el tratamiento bacteriano de lixiviados.</p>
+    </div>
+    <div class="institutional" aria-label="Instituciones participantes">
+      <figure><div class="logo-frame"><img src="logo_tecnologia.png" alt="Facultad de Tecnología UMRPSFXCH"></div><figcaption>Facultad de Tecnología</figcaption></figure>
+      <figure><div class="logo-frame"><img src="logo_ambiental.png" alt="Ingeniería Ambiental, Sucre Bolivia"></div><figcaption>Ingeniería Ambiental</figcaption></figure>
+    </div>
+  </header>
+
+  <main>
+    <div class="connection-row"><div id="estado" class="status main-status error" role="status" aria-live="polite"><span class="status-dot"></span><b>NO CONECTADO</b></div></div>
+    <nav class="stepper" aria-label="Progreso del experimento">
+      <button type="button" class="step active" data-go="0"><b>1</b><span><small>PASO 01</small>Lixiviado</span></button>
+      <i></i><button type="button" class="step" data-go="1"><b>2</b><span><small>PASO 02</small>Selección</span></button>
+      <i></i><button type="button" class="step" data-go="2"><b>3</b><span><small>PASO 03</small>Bacterias</span></button>
+      <i></i><button type="button" class="step" data-go="3"><b>4</b><span><small>PASO 04</small>Reactor</span></button>
+      <i></i><button type="button" class="step" data-go="4"><b>5</b><span><small>PASO 05</small>Resultados</span></button>
+    </nav>
+
+    <form id="formulario" novalidate>
+      <section class="wizard-panel active" data-step="0">
+        <div class="panel-head"><span class="panel-number">01</span><div><span class="kicker">CARACTERIZACIÓN</span><h2>Lixiviado inicial</h2><p>Registre las propiedades fisicoquímicas antes del tratamiento.</p></div></div>
+        <div class="panel-scroll"><div class="quick-bar"><div><b>Perfiles rápidos</b><small>Cargan valores editables dentro del rango de entrenamiento</small></div><div class="quick-buttons"><button type="button" class="chip active" data-preset="medio">Carga media</button><button type="button" class="chip" data-preset="alta">Carga alta</button><button type="button" class="chip" data-preset="baja">Carga baja</button></div></div>
+        <div id="lixiviado" class="grid fields"></div></div>
+        <div class="wizard-actions end"><button class="primary next" type="button">Continuar al consorcio <span>→</span></button></div>
+      </section>
+
+      <section class="wizard-panel" data-step="1">
+        <div class="panel-head"><span class="panel-number">02</span><div><span class="kicker">SELECCIÓN BIOLÓGICA</span><h2>Seleccione las bacterias</h2><p>Elija una o varias cepas para el tratamiento.</p></div></div>
+        <div class="panel-scroll"><div class="selector-panel">
+          <div class="selector-head"><div><b>Seleccione una o varias bacterias</b><small>Pulse nuevamente para retirar una selección</small></div><div class="selection-status"><strong id="seleccionadas-count">0</strong><span><small>SELECCIONADAS</small><b id="modo-tratamiento">Control</b></span></div></div>
+          <div class="bacteria-selector">
+            <button type="button" data-select-bacteria="pseudomonas"><span class="bacteria-symbol">PS</span><span><b>Pseudomonas</b><small>Seleccionar cepa</small></span><i>✓</i></button>
+            <button type="button" data-select-bacteria="bacillus_cereus"><span class="bacteria-symbol">BC</span><span><b>Bacillus cereus</b><small>Seleccionar cepa</small></span><i>✓</i></button>
+            <button type="button" data-select-bacteria="klebsiella"><span class="bacteria-symbol">KL</span><span><b>Klebsiella</b><small>Seleccionar cepa</small></span><i>✓</i></button>
+            <button type="button" data-select-bacteria="clostridium"><span class="bacteria-symbol">CL</span><span><b>Clostridium</b><small>Seleccionar cepa</small></span><i>✓</i></button>
+          </div>
+          <div class="selector-actions"><button type="button" class="chip" id="consorcio-completo">Seleccionar todas</button><button type="button" class="chip" id="tratamiento-control">Limpiar selección</button></div>
+        </div>
+        </div>
+        <div class="wizard-actions"><button class="secondary prev" type="button">← Anterior</button><button class="primary next" type="button">Configurar selección <span>→</span></button></div>
+      </section>
+
+      <section class="wizard-panel" data-step="2">
+        <div class="panel-head"><span class="panel-number">03</span><div><span class="kicker">PARÁMETROS DEL CULTIVO</span><h2>Configure cada bacteria</h2><p>Abra cada tarjeta, complete sus valores y guarde la configuración.</p></div></div>
+        <div class="panel-scroll"><div id="configuracion-bacterias" class="configuration-grid"></div><div id="sin-bacterias" class="control-empty" hidden><span>○</span><h3>Tratamiento de control</h3><p>No se aplicarán bacterias en este experimento.</p></div>
+        <div class="totals"><div><small>UFC TOTALES</small><strong id="ufc-total">0</strong></div><div><small>CONCENTRACIÓN EN REACTOR</small><strong id="concentracion-final">0 UFC/mL</strong></div><div><small>PROPORCIONES</small><strong id="proporcion-total">0 %</strong></div></div></div>
+        <div class="wizard-actions"><button class="secondary prev" type="button">← Cambiar selección</button><button class="primary next" type="button">Continuar al reactor <span>→</span></button></div>
+      </section>
+
+      <section class="wizard-panel" data-step="3">
+        <div class="panel-head"><span class="panel-number">04</span><div><span class="kicker">CONDICIONES OPERATIVAS</span><h2>Configuración del reactor</h2><p>Defina las condiciones en las que se ejecutará el tratamiento.</p></div></div>
+        <div class="panel-scroll"><div class="quick-bar"><div><b>Operación recomendada</b><small>Condición central del dominio sintético</small></div><div class="quick-buttons"><button type="button" class="chip" id="reactor-recomendado">Aplicar configuración</button></div></div>
+        <div id="experimento" class="grid fields reactor-fields"></div>
+        <div class="summary-card"><div><span>Resumen antes de simular</span><h3>Revise el experimento</h3></div><dl><div><dt>Bacterias activas</dt><dd id="resumen-bacterias">0</dd></div><div><dt>UFC consorcio</dt><dd id="resumen-ufc">0</dd></div><div><dt>Proporciones</dt><dd id="resumen-proporcion">0 %</dd></div></dl></div>
+        <div id="mensaje" role="alert"></div></div>
+        <div class="wizard-actions"><button class="secondary prev" type="button">← Anterior</button><button class="primary process-button" id="ejecutar-prediccion" type="submit"><span class="process-icon">✦</span><span class="process-copy"><b>Procesar tratamiento</b><small>Generar las seis predicciones</small></span><span class="process-arrow">→</span></button></div>
+        <div id="procesando" class="processing-overlay" hidden><div class="processing-card"><div class="loader-orbit"><span></span><b>ML</b></div><h3>Procesando experimento</h3><p id="processing-text">Validando variables de entrada…</p><div class="processing-progress"><i></i></div><div class="processing-steps"><span class="active">Validación</span><span>Preparación</span><span>Predicción</span><span>Resultados</span></div></div></div>
+      </section>
+
+      <section class="wizard-panel" data-step="4" id="resultados">
+        <div class="panel-head"><span class="panel-number">05</span><div><span class="kicker">ANÁLISIS PREDICTIVO</span><h2>Resultados del tratamiento</h2><p>Comparación entre la condición inicial y la salida estimada.</p></div></div>
+        <div class="panel-scroll"><div id="result-grid" class="result-grid"><div class="empty"><span>⌁</span><h3>Aún no hay una predicción</h3><p>Complete los pasos anteriores para consultar el modelo.</p></div></div></div>
+        <div class="wizard-actions result-actions"><button class="secondary" id="editar" type="button">← Editar experimento</button><button class="report-button" id="generar-reporte" type="button" disabled><span>↓</span><span><b>Descargar reporte</b><small>Archivo PDF</small></span></button><button class="primary" id="nuevo" type="button">Nueva simulación <span>＋</span></button></div>
+      </section>
+      <div id="bacterias" class="bacteria-grid modal-bacteria-fields"></div>
+    </form>
+
+    <div id="modal-bacteria" class="bacteria-modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-bacteria-titulo"><div class="modal-backdrop" data-close-modal></div><div class="modal-card"><header><div><small>CONFIGURACIÓN INDIVIDUAL</small><h2 id="modal-bacteria-titulo">Bacteria</h2></div><button type="button" class="modal-close" data-close-modal aria-label="Cerrar">×</button></header><div id="modal-bacteria-contenido" class="modal-content"></div><footer><button type="button" class="secondary" data-close-modal>Cancelar</button><button type="button" class="primary" id="guardar-bacteria">Guardar configuración</button></footer></div></div>
+
+    <button type="button" id="ayuda-flotante" class="help-fab" aria-label="Abrir ayuda del paso actual" aria-expanded="false"><span>?</span><b>Ayuda</b><i id="ayuda-paso-indicador">1</i></button>
+    <div id="panel-ayuda" class="help-overlay" hidden><div class="help-backdrop" data-close-help></div><aside class="help-drawer" role="dialog" aria-modal="true" aria-labelledby="ayuda-titulo"><header><div><small id="ayuda-etiqueta">GUÍA DEL PASO 01</small><h2 id="ayuda-titulo">Ayuda contextual</h2></div><button type="button" data-close-help aria-label="Cerrar ayuda">×</button></header><div id="ayuda-contenido" class="help-content"></div><footer><span>La guía cambia automáticamente con cada paso.</span><button type="button" class="primary" data-close-help>Entendido</button></footer></aside></div>
+
+  </main>
+  <script src="html2pdf.bundle.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
