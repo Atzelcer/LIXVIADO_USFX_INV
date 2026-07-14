@@ -1,4 +1,4 @@
-# LixiviaLab ML
+# Biolix
 
 Aplicación web para estimar seis variables finales del tratamiento bacteriano de lixiviados: pH, DQO, DBO5, conductividad, turbidez e índice de toxicidad.
 
@@ -34,7 +34,7 @@ El archivo `render.yaml` contiene la configuración completa del servicio.
 1. Suba el contenido de esta carpeta a un repositorio Git.
 2. En Render seleccione `New` y luego `Blueprint`.
 3. Conecte el repositorio.
-4. Render detectará `render.yaml` y creará el servicio `lixivialab-ml`.
+4. Render detectará `render.yaml` y creará el servicio `biolix`.
 5. Cuando termine el despliegue, abra la dirección `onrender.com` asignada.
 
 ## Actualizaciones automáticas

@@ -9,7 +9,7 @@ from config import PERIODO_TRATAMIENTO, RUTA_MODELO, VARIABLES_OBJETIVO
 from esquema_datos import ErrorValidacionDatos
 from predecir import ModeloNoDisponible, cargar_modelo, predecir_experimento
 
-app = FastAPI(title="Lixiviados ML API", version="0.1.0")
+app = FastAPI(title="Biolix API", version="0.1.0")
 DASHBOARD = Path(__file__).resolve().parents[1] / "dashboard"
 app.add_middleware(CORSMiddleware, allow_origins=["*"],
                    allow_methods=["GET", "POST"], allow_headers=["*"])
